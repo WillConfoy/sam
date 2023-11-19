@@ -182,4 +182,19 @@ let pngon: Parser<ngon> =
 
 let grammar = pleft pngon peof
 
+
+let parse(s: string): ngon option =
+    let input = prepare s
+    match grammar input with
+        | Success(ast,_) -> Some ast
+        | Failure(pos,rule) ->
+            printfn "Invalid Expression"
+            let msg =
+                sprintf
+                    "Cannot parse input at position %d in rule '%s':" pos rule
+            let diag = diagnosticMessage 20 (pos - 1) s msg
+            printf "%s" diag
+            None
+
+
 // let grammar: Parser<ngon list> = pleft (pmany1 pngon) peof
