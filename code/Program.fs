@@ -5,10 +5,12 @@ open Combinator
 
 // [<EntryPoint>]
 // let main(argv: string[]): int = 
-//   let input = prepare "1 7-gon with radius 20and center(1,1),step[],color[0x5f28a8],centerDelta(1,1),normal(0.0,1.0) and granularity 0"
+//   let input = prepare "2 7-gon with radius 20and center(100,50),step[10],color[#5f28a8,#FFFFFF],centerDelta(1,1),normal(0.0,1.0) and granularity 0"
 //   // let grammar = pleft pngon peof
 //   printfn "%A" (grammar input)
 //   0
+
+// "4 10-gon with radius 30and center(100,50),step[1,2,1],color[#f9c406,#FF0000,#995668,#f9c406],centerDelta(-5,2),laplace(0.0,10.0) and granularity 5"
 
 [<EntryPoint>]
 let main (argv: string[]): int =
@@ -17,7 +19,7 @@ let main (argv: string[]): int =
             let asto = parse argv.[0]
             match asto with
                 | Some ast ->
-                    printfn "%A" (eval ast)
+                    printfn "%s" (eval ast)
                     0
                 | None -> 0
         | _ ->

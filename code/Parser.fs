@@ -42,9 +42,9 @@ let phexchar: Parser<char> =
 
 let phex: Parser<string> = 
   pseq
-    (pstr "0x")
+    (pchar '#')
     (pmany1 phexchar)
-    (fun (prefix, hs) -> prefix + (stringify hs))
+    (fun (prefix, hs) -> stringify (prefix :: hs))
 
 (* ptuple p
  *   Parses tuples of the form "(a1,a2)" where a1 and a2 are of the same type
@@ -58,7 +58,7 @@ let ptuple(p: Parser<'a>): Parser<'a * 'a> =
 (* pcommaseq p
  *   Parses a comma seperated sequnce of the form "a1" or "a1,a2,a3,...", where
  *   each a_i is of type 'a. 
- *)
+ *) //FIX THISSSSSSSSSSSS
 let pcommaseq(p: Parser<'a>): Parser<'a list> =
   pseq
     (pmany0 (pleft p (pchar ',')))
@@ -114,7 +114,8 @@ let pcolor: Parser<string list> = pfield ("color") (plist phex)
  *   Parses how the center of the polygon changes. Input is of the form
  *   "centerDelta(n1,n2)," where n1 and n2 are positive integers parsed by pnum. 
  *)
-let pcenterDelta: Parser<int * int> = pfield ("centerDelta") (ptuple pnum)
+let pcenterDelta: Parser<int * int> = 
+  pfield ("centerDelta") (ptuple (pnum <|> pnegnum))
 
 (* pdist
  *   Parses the distribution field of the polygon.
