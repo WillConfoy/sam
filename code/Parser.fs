@@ -181,7 +181,7 @@ let pngon: Parser<ngon> =
       dist = j;
       granularity = k})
 
-let expr = pmany1 ((pleft pngon (pchar '\n')) <|> pngon)
+let expr = pmany1 ((pleft pngon (pmany1 (pchar '\n'))) <|> pngon)
 
 let grammar = pleft expr peof
 
