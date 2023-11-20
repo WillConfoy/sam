@@ -63,7 +63,7 @@ let pcommaseq(p: Parser<'a>): Parser<'a list> =
   pseq
     (pmany0 (pleft p (pchar ',')))
     p
-    (fun (AS, A) -> A :: AS |> List.rev)
+    (fun (AS, A) -> AS@[A])
 
 (* plist p
  *   Parses a comma seperated list of the form "[a1]" or "[a1,a2,a3,...]", 

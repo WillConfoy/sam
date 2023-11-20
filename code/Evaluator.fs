@@ -13,7 +13,7 @@ let createPoints(r: double)((x,y): double * double)(n: int): (double * double) l
     | _ -> theta * (double n) :: makePList(n-1)
 
   makePList(n) |> List.rev
-               |> List.map (fun t -> (r * Math.Cos(t) + x, r * Math.Sin(t) + y))
+               |> List.map (fun t -> (Math.Round((r * Math.Cos(t) + x),3),Math.Round((r * Math.Sin(t) + y),3)))
   
 
 
@@ -48,6 +48,5 @@ let multngons(ngon: ngon): string =
 
 
 let eval (ngon: ngon): string =
-  printfn "%A" ngon
   let s = "viewBox=\"0 0 200 100\" xmlns=\"http://www.w3.org/2000/svg\""
-  $"<svg {s}> \n {multngons ngon} \n </svg>"
+  $"<svg {s}>\n{multngons ngon}\n</svg>"
