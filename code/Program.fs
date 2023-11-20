@@ -13,10 +13,12 @@ open Combinator
 // "4 10-gon with radius 30and center(100,50),step[1,2,1],color[#f9c406,#FF0000,#995668,#f9c406],centerDelta(-5,2),laplace(0.0,10.0) and granularity 5"
 
 [<EntryPoint>]
-let main (argv: string[]): int =
-    match argv.Length with
+let main (args: string[]): int =
+    let file = args[0]
+    let text = File.ReadAllText file
+    match args.Length with
         | 1 ->
-            let asto = parse argv.[0]
+            let asto = parse text
             match asto with
                 | Some ast ->
                     printfn "%s" (eval ast)

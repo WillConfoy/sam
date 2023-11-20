@@ -181,10 +181,12 @@ let pngon: Parser<ngon> =
       dist = j;
       granularity = k})
 
-let grammar = pleft pngon peof
+let expr = pmany1 ((pleft pngon (pchar '\n')) <|> pngon)
+
+let grammar = pleft expr peof
 
 
-let parse(s: string): ngon option =
+let parse(s: string): ngon list option =
     let input = prepare s
     match grammar input with
         | Success(ast,_) -> Some ast

@@ -46,7 +46,12 @@ let multngons(ngon: ngon): string =
   let totalStep = ngon.step |> List.fold (fun acc x -> acc + x) 0
   makeNString (ngon.num) (totalStep)
 
+let allngons (ngonL: ngon list): string =
+  ngonL |> 
+    List.fold (fun acc ngon -> acc + (multngons ngon) + "\n") ""
 
-let eval (ngon: ngon): string =
+
+
+let eval (ngonL: ngon list): string =
   let s = "viewBox=\"0 0 200 100\" xmlns=\"http://www.w3.org/2000/svg\""
-  $"<svg {s}>\n{multngons ngon}\n</svg>"
+  $"<svg {s}>\n{allngons ngonL}\n</svg>"
