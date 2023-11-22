@@ -1,8 +1,18 @@
+[<canvas (400,400)>]
+
+
 4 3-gon with radius 30and center(100,50),step[1,2,1],color[#f9c406,#FF0000,#995668,#f9c406],centerDelta(-5,2),laplace(0.0,10.0) and granularity 5
 
 
 
-2 4-gon with radius 20and center(100,50),step[10],color[#5f28a8,#FFFFFF],centerDelta(1,1),normal(0.0,1.0) and granularity 0
+2    4-gon with radius 20   and center (100,50)  , step [10]   ,   color [#5f28a8,#FFFFFF]  , centerDelta (1,1)  , normal (0.0,1.0) and granularity 0
 
-
-
+8 50-gon with radius 60 and center (200,200), step [10,20,10,10,10,10,10] , color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta(-25,-25), normal (0.0,10.0) and granularity 50
+8 50-gon with radius 60 and center (200,200), step [10,10,10,10,10,10,10] , color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta(25,25), normal (0.0,10.0) and granularity 50
+8 50-gon with radius 60 and center (200,200), step [10,10,10,10,10,10,10] , color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta(25,-25), normal (0.0,10.0) and granularity 50
+8 50-gon with radius 60 and center (200,200), step [10,10,10,10,10,10,10] , color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta(-25,25), normal (0.0,10.0) and granularity 50
+8 50-gon with radius 60 and center (200,200), step [10,10,10,10,10,10,10] , color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta(25,0), normal (0.0,10.0) and granularity 50
+8 50-gon with radius 60 and center (200,200), step [10,10,10,10,10,10,10] , color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta(-25,0), normal (0.0,10.0) and granularity 50
+8 50-gon with radius 60 and center (200,200), step [10,10,10,10,10,10,10] , color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta(0,25), normal (0.0,10.0) and granularity 50
+8 50-gon with radius 60 and center (200,200), step [10,10,10,10,10,10,10] , color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta(0,-25), normal (0.0,10.0) and granularity 50
+1 50-gon with radius 60 and center (200,200), step [], color [#800000FF], centerDelta(1,1), normal (0.0,0.0) and granularity 1

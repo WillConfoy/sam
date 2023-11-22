@@ -12,7 +12,7 @@ type ngon = {
   center: int * int;
   step: int list;           // size of num-1
   color: string list;       // size of num
-  centerDelta: int * int;
+  centerDelta: (int * int) list;
   dist: dist;
   granularity: int;
 }

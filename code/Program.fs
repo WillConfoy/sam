@@ -12,6 +12,8 @@ open Combinator
 
 // "4 10-gon with radius 30and center(100,50),step[1,2,1],color[#f9c406,#FF0000,#995668,#f9c406],centerDelta(-5,2),laplace(0.0,10.0) and granularity 5"
 
+// canvas (400,400)
+
 [<EntryPoint>]
 let main (args: string[]): int =
     let file = args[0]

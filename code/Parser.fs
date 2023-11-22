@@ -88,34 +88,34 @@ let pfield(s: string)(p: Parser<'a>): Parser<'a> =
  *   Parses the number of sides of the polygon. Input is of the form
  *   "n-gon with radius" where n is a positive integer parsed by pnum.  
  *)
-let psides: Parser<int> = pleft pnum (pad (pstr "-gon with radius"))
+let psides: Parser<int> = pleft pnum (pstr "-gon with radius")
 
 (* pcenter
  *   Parses the center of the polygon. Input is of the form "and center(n1,n2)," 
  *   where n1 and n2 is a positive integers parsed by pnum.  
  *)
-let pcenter: Parser<int * int> = pfield ("and center") (ptuple pnum)
+let pcenter: Parser<int * int> = pfield ("and center") (pad (ptuple pnum))
 
 (* pstep
  *   Parses the step of the polygon. Input is of the form "step[n1]," or 
  *   "step[n1,n2,n3,...]," where each n_i is a positive intger parsed by pnum
  *)
 let pstep: Parser<int list> = 
-  pfield ("step") ((plist pnum) <|> (pstr "[]" |>> (fun _ -> [])))
+  pfield ("step") (pad ((plist pnum) <|> (pstr "[]" |>> (fun _ -> []))))
 
 (* pcolor
  *   Parses the color list of the polygon. Input is of the form 
  *   "color[0xFFFFFF]" or "color[0xFFFFFF,0xFF00AA,...]" where each hex string
  *   is the color of a single polygon
  *)
-let pcolor: Parser<string list> = pfield ("color") (plist phex)
+let pcolor: Parser<string list> = pfield ("color") (pad (plist phex))
 
 (* pcenterDelta
  *   Parses how the center of the polygon changes. Input is of the form
  *   "centerDelta(n1,n2)," where n1 and n2 are positive integers parsed by pnum. 
  *)
-let pcenterDelta: Parser<int * int> = 
-  pfield ("centerDelta") (ptuple (pnum <|> pnegnum))
+let pcenterDelta: Parser<(int * int) list> = 
+  pfield ("centerDelta") (pad (plist (ptuple (pnum <|> pnegnum))))
 
 (* pdist
  *   Parses the distribution field of the polygon.
@@ -124,8 +124,8 @@ let pname: Parser<string> =
   (pstr "normal") <|> (pstr "uniform") <|> (pstr "laplace") <|> (pstr "fish")
 let pdist: Parser<dist> = 
   pseq
-    (pname)
-    (ptuple pfloat)
+    (pad pname)
+    (pad (ptuple pfloat))
     (fun (n,t) -> {name = n; param = t})
 
 (* pgran
@@ -134,32 +134,39 @@ let pdist: Parser<dist> =
  *)
 let pgran: Parser<int> = pright (pad (pstr "and granularity")) pnum
 
+let pcanvas = 
+  pbetween
+    (pstr "[<canvas") 
+    (pad (ptuple pnum))
+    (pstr ">]")
+
 
 let pfirst: Parser<int * int * int * (int * int)> =
   pseq
     (pseq
       (pleft pnum pws1)
-      psides
+      (pad psides)
       (fun i -> i))
     (pseq
-      pnum
-      pcenter
+      (pad pnum)
+      (pad pcenter)
       (fun i -> i))
     (fun ((a, b), (c, (x, y))) -> (a,b,c,(x,y)))
 
-let psecond: Parser<int list * string list * (int * int)> =
+let psecond: Parser<int list * string list * (int * int) list> =
   pseq
     (pseq
-      pstep
-      pcolor
+      (pad pstep)
+      (pad pcolor)
       (fun i -> i))
-    pcenterDelta
-    (fun ((ns, colors), (x, y)) -> (ns,colors,(x,y)))
+    (pad pcenterDelta)
+    // (fun ((ns, colors), (x, y)) -> (ns,colors,(x,y)))
+    (fun ((ns, colors), deltas) -> (ns,colors,deltas))
 
 let pthird: Parser<dist * int> =
   pseq
-    pdist
-    pgran
+    (pad pdist)
+    (pad pgran)
     (fun i -> i)
 
 
@@ -181,12 +188,27 @@ let pngon: Parser<ngon> =
       dist = j;
       granularity = k})
 
-let expr = pmany1 ((pleft pngon (pmany1 (pchar '\n'))) <|> pngon)
+let ngonlist = pmany1 ((pleft pngon (pmany1 (pchar '\n'))) <|> pngon)
+
+// let grammar = pleft expr peof
+let expr =
+  pseq
+    (pleft (pad pcanvas) (pmany0 pnl))
+    ngonlist
+    (fun x -> x)
 
 let grammar = pleft expr peof
 
+// let grammar: Parser<(int * int) * ngon list> =
+//   pseq
+//     (pseq
+//       (pleft (pad pcanvas) (pmany0 pnl))
+//       expr
+//       (fun x -> x))
+//     peof
+//     (fun (x,_) -> x)
 
-let parse(s: string): ngon list option =
+let parse(s: string): ((int * int) * ngon list) option =
     let input = prepare s
     match grammar input with
         | Success(ast,_) -> Some ast
