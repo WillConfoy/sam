@@ -18,12 +18,12 @@ let createPoints(r: double)((x,y): double * double)(n: int): (double * double) l
 
 
 // let evalngon(ngon: ngon): string =
-let evalngon(r: double)((x,y): double * double)(n: int)(c: string): string =
+let evalngon(r: double)((x,y): double * double)(n: int)(c: string)(rotate:float): string =
   // let (x,y) = (double (fst ngon.center), double (snd ngon.center))
   let points = createPoints (r) ((x,y)) (n)
   let pointString = 
       (points |> List.fold (fun acc (x,y) -> acc + $"{x},{y} ") "")
-  $"<polygon points=\"{pointString}\" fill=\"{c}\"/>"
+  $"<polygon points=\"{pointString}\" fill=\"{c}\" transform=\"rotate({rotate}, {x},{y})\"/>"
 
 // let multngons(ngon: ngon): string =
 //   let rec makeNString (n: int) (totalStep: int): string =
@@ -58,7 +58,7 @@ let multngons(ngon: ngon): string =
     match n with
     | 1 ->
         let (x,y) = (double (fst ngon.center), double (snd ngon.center))
-        evalngon (ngon.radius) ((x,y)) (ngon.numSides) (ngon.color[0])
+        evalngon (ngon.radius) ((x,y)) (ngon.numSides) (ngon.color[0]) (ngon.rotations[0])
     | _ ->
         // let (x,y) = (double (fst ngon.center), double (snd ngon.center))
         let (dx,dy) = (double (fst ngon.centerDelta[n-2]), double (snd ngon.centerDelta[n-2]))
@@ -70,6 +70,7 @@ let multngons(ngon: ngon): string =
           (cx, cy)
           (ngon.numSides)
           (ngon.color[n-1])
+          (ngon.rotations[n-1])
         + "\n" + (makeNString(n-1) (totalStep - ngon.step[n-2]) ((cx-dx, cy-dy)))
 
   let totalStep = ngon.step |> List.fold (fun acc x -> acc + x) 0
@@ -78,10 +79,20 @@ let multngons(ngon: ngon): string =
   makeNString (ngon.num) (totalStep) ((finalx,finaly))
 
 let clean (ngon) =
+  if ngon.color.Length > ngon.num then
+    failwith $"Color list too long: must be at most {ngon.num}, the number of ngons"
+  elif ngon.step.Length > (ngon.num-1) then
+    failwith $"Step list too long: must be at most {ngon.num-1}, one less than the number of ngons"
+  elif ngon.centerDelta.Length > (ngon.num-1) then
+    failwith $"CenterDelta list too long: must be at most {ngon.num-1}, one less than the number of ngons"
+  elif ngon.rotations.Length > ngon.num then
+    failwith $"Rotation list too long: must be at most {ngon.num}, the number of ngons"
+  
   let realColors = ngon.color |> extendList ngon.num
   let realSteps = ngon.step |> extendList (ngon.num-1)
   let realDeltas = ngon.centerDelta |> extendList (ngon.num-1)
-  {ngon with step=realSteps; color=realColors; centerDelta=realDeltas}
+  let realRotations = ngon.rotations |> extendList ngon.num
+  {ngon with step=realSteps; color=realColors; centerDelta=realDeltas; rotations=realRotations}
 
 let allngons (ngonL: ngon list): string =
   ngonL |> 

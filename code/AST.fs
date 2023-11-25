@@ -15,4 +15,5 @@ type ngon = {
   centerDelta: (int * int) list;
   dist: dist;
   granularity: int;
+  rotations: float list;
 }

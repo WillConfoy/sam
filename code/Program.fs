@@ -16,6 +16,7 @@ open Combinator
 
 [<EntryPoint>]
 let main (args: string[]): int =
+  try
     let file = args[0]
     let text = File.ReadAllText file
     match args.Length with
@@ -29,3 +30,5 @@ let main (args: string[]): int =
         | _ ->
             printfn "Usage: good question"
             1
+  with
+  | e -> printfn $"Error thrown! \n\n{e.Message}"; 1

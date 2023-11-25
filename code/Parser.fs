@@ -140,6 +140,8 @@ let pcanvas =
     (pad (ptuple pnum))
     (pstr ">]")
 
+let prot = pfield "rotation" (pad (plist pfloat))
+
 
 let pfirst: Parser<int * int * int * (int * int)> =
   pseq
@@ -153,15 +155,17 @@ let pfirst: Parser<int * int * int * (int * int)> =
       (fun i -> i))
     (fun ((a, b), (c, (x, y))) -> (a,b,c,(x,y)))
 
-let psecond: Parser<int list * string list * (int * int) list> =
+let psecond: Parser<int list * float list * string list * (int * int) list> =
   pseq
     (pseq
       (pad pstep)
-      (pad pcolor)
+      (pad prot)
       (fun i -> i))
-    (pad pcenterDelta)
-    // (fun ((ns, colors), (x, y)) -> (ns,colors,(x,y)))
-    (fun ((ns, colors), deltas) -> (ns,colors,deltas))
+    (pseq
+      (pad pcolor)
+      (pad pcenterDelta)
+      (fun i -> i))
+    (fun ((ns,rots),(colors,deltas)) -> (ns,rots,colors,deltas))
 
 let pthird: Parser<dist * int> =
   pseq
@@ -177,14 +181,15 @@ let pngon: Parser<ngon> =
       psecond
       (fun i -> i))
     pthird
-    (fun (((a,b,c,d),(fs,gs,h)),(j,k)) ->
-      {num = a;
-      numSides = b;
-      radius = c;
-      center = d;
-      step = fs;
-      color = gs;
-      centerDelta = h;
+    (fun (((num,sides,rad,cent),(rs,rots,cs,cents)),(j,k)) ->
+      {num = num;
+      numSides = sides;
+      radius = rad;
+      center = cent;
+      step = rs;
+      rotations = rots;
+      color = cs;
+      centerDelta = cents;
       dist = j;
       granularity = k})
 
