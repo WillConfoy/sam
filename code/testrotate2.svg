@@ -1,0 +1,8 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+<polygon points="165,275 125,315 85,275 125,235 165,275 " fill="#000000" transform="rotate(45, 125,275)"/>
+<polygon points="165,125 125,165 85,125 125,85 165,125 " fill="#000000" transform="rotate(45, 125,125)"/>
+<polygon points="315,125 275,165 235,125 275,85 315,125 " fill="#000000" transform="rotate(45, 275,125)"/>
+<polygon points="315,275 275,315 235,275 275,235 315,275 " fill="#000000" transform="rotate(45, 275,275)"/>
+<polygon points="240,200 200,240 160,200 200,160 240,200 " fill="#000000" transform="rotate(45, 200,200)"/>
+
+</svg>

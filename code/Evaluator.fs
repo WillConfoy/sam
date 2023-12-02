@@ -87,13 +87,13 @@ let clean (ngon) =
     failwith $"CenterDelta list too long: must be at most {ngon.num-1}, one less than the number of ngons"
   elif ngon.rotations.Length > ngon.num then
     failwith $"Rotation list too long: must be at most {ngon.num}, the number of ngons"
-  elif ngong.step.Length = 0 && ngon.num <> 1 then
+  elif ngon.step.Length = 0 && ngon.num <> 1 then
     failwith $"Step list must not be empty with more than 1 ngon"
-  elif ngong.centerDelta.Length = 0 && ngon.num <> 1 then
+  elif ngon.centerDelta.Length = 0 && ngon.num <> 1 then
     failwith $"CenterDelta list must not be empty with more than 1 ngon"
-  elif ngong.color.Length = 0 then
+  elif ngon.color.Length = 0 then
     failwith $"Color list must not be empty"
-  elif ngong.rotations.Length = 0 then
+  elif ngon.rotations.Length = 0 then
     failwith $"Rotation list must not be empty"
   
   let realColors = ngon.color |> extendList ngon.num
