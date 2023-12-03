@@ -78,15 +78,21 @@ let multngons(ngon: ngon): string =
   let finaly = (snd ngon.center) + (ngon.centerDelta |> List.fold (fun acc y -> acc + (snd y)) 0)
   makeNString (ngon.num) (totalStep) ((finalx,finaly))
 
-let setDefaultStep (xs: int list) =
+let setDefaultInt (xs: int list) =
   if xs.Length = 0 then
     0::xs
   else
     xs
 
-let setDefaultCenterDelta (xs: (int * int) list) =
+let setDefaultIntTuple (xs: (int * int) list) =
   if xs.Length = 0 then
     (0,0)::xs
+  else
+    xs
+
+let setDefaultFloat (xs: float list) =
+  if xs.Length = 0 then
+    0.0::xs
   else
     xs
 
@@ -95,7 +101,7 @@ let clean (ngon) =
     failwith $"Color list too long: must be at most {ngon.num}, the number of ngons"
   elif ngon.step.Length > (ngon.num-1) then
     failwith $"Step list too long: must be at most {ngon.num-1}, one less than the number of ngons"
-  elif ngon.centerDelta.Length > (ngon.num-1) then
+  elif ngon.centerDelta.Length > (ngon.num-1) && ngon.num <> 1 then
     failwith $"CenterDelta list too long: must be at most {ngon.num-1}, one less than the number of ngons"
   elif ngon.rotations.Length > ngon.num then
     failwith $"Rotation list too long: must be at most {ngon.num}, the number of ngons"
@@ -105,13 +111,11 @@ let clean (ngon) =
     failwith $"CenterDelta list must not be empty with more than 1 ngon"
   elif ngon.color.Length = 0 then
     failwith $"Color list must not be empty"
-  elif ngon.rotations.Length = 0 then
-    failwith $"Rotation list must not be empty"
   
   let realColors = ngon.color |> extendList ngon.num
-  let realSteps = ngon.step |> setDefaultStep |> extendList (ngon.num-1)
-  let realDeltas = ngon.centerDelta |> setDefaultCenterDelta |> extendList (ngon.num-1)
-  let realRotations = ngon.rotations |> extendList ngon.num
+  let realSteps = ngon.step |> setDefaultInt |> extendList (ngon.num-1)
+  let realDeltas = ngon.centerDelta |> setDefaultIntTuple |> extendList (ngon.num-1)
+  let realRotations = ngon.rotations |> setDefaultFloat |> extendList ngon.num
   {ngon with step=realSteps; color=realColors; centerDelta=realDeltas; rotations=realRotations}
 
 let allngons (ngonL: ngon list): string =
