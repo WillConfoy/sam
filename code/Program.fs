@@ -28,7 +28,7 @@ let main (args: string[]): int =
                     0
                 | None -> 0
         | _ ->
-            printfn "Usage: good question"
+            printfn "Usage: dotnet run fileName.sam"
             1
   with
   | e -> printfn $"Error thrown! \n\n{e.Message}"; 1

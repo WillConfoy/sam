@@ -122,7 +122,8 @@ let pcenterDelta: Parser<(int * int) list> =
  *)
 let pname: Parser<string> = 
   (pstr "normal") <|> (pstr "uniform") <|> (pstr "laplace") <|> (pstr "fish")
-let pdist: Parser<dist> = 
+
+(*let pdist: Parser<dist> = 
   pseq
     (pad pname)
     (pad (ptuple pfloat))
@@ -133,6 +134,7 @@ let pdist: Parser<dist> =
  *   by an integer.
  *)
 let pgran: Parser<int> = pright (pad (pstr "and granularity")) pnum
+*)
 
 let pcanvas = 
   pbetween
@@ -167,14 +169,15 @@ let psecond: Parser<int list * float list * string list * (int * int) list> =
       (fun i -> i))
     (fun ((ns,rots),(colors,deltas)) -> (ns,rots,colors,deltas))
 
-let pthird: Parser<dist * int> =
+(*let pthird: Parser<dist * int> =
   pseq
     (pad pdist)
     (pad pgran)
     (fun i -> i)
-
+*)
 
 let pngon: Parser<ngon> = 
+  (*
   pseq
     (pseq
       pfirst
@@ -191,7 +194,22 @@ let pngon: Parser<ngon> =
       color = cs;
       centerDelta = cents;
       dist = j;
-      granularity = k})
+      granularity = k})*)
+  pseq
+    pfirst
+    psecond
+    (fun ((num,sides,rad,cent),(rs,rots,cs,cents)) ->
+      {num = num;
+      numSides = sides;
+      radius = rad;
+      center = cent;
+      step = rs;
+      rotations = rots;
+      color = cs;
+      centerDelta = cents;
+      dist = None;
+      granularity = None})
+    
 
 let ngonlist = pmany1 ((pleft pngon (pmany1 (pchar '\n'))) <|> pngon)
 

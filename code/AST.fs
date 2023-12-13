@@ -13,7 +13,7 @@ type ngon = {
   step: int list;           // size of num-1
   color: string list;       // size of num
   centerDelta: (int * int) list;
-  dist: dist;
-  granularity: int;
+  dist: dist option;
+  granularity: int option;
   rotations: float list;
 }
