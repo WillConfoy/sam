@@ -1,0 +1,12 @@
+[<canvas (700,700)>]
+
+
+8 60-gon with radius 60 and center (350,350), step [10] , rotation [0.0], color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta[(-25,-25)]
+8 60-gon with radius 60 and center (350,350), step [10] ,rotation [0.0], color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta[(25,25)]
+8 60-gon with radius 60 and center (350,350), step [10] ,rotation [0.0], color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta[(25,-25)]
+8 60-gon with radius 60 and center (350,350), step [10] ,rotation [0.0], color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta[(-25,25)]
+8 60-gon with radius 60 and center (350,350), step [10] ,rotation [0.0], color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta[(0,25)]
+8 60-gon with radius 60 and center (350,350), step [10] ,rotation [0.0], color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta[(0,-25)]
+8 60-gon with radius 60 and center (350,350), step [10] ,rotation [0.0], color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta[(25,0)]
+8 60-gon with radius 60 and center (350,350), step [10] ,rotation [0.0], color [#f9c406,#FF0000,#995668,#f9c406,#f9c406,#FF0000,#995668,#f9c406], centerDelta[(-25,0)]
+1 60-gon with radius 60 and center (350,350), step [], rotation [0.0], color [#0055BB], centerDelta [(0,0)]

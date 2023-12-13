@@ -115,7 +115,11 @@ let pcolor: Parser<string list> = pfield ("color") (pad (plist phex))
  *   "centerDelta(n1,n2)," where n1 and n2 are positive integers parsed by pnum. 
  *)
 let pcenterDelta: Parser<(int * int) list> = 
-  pfield ("centerDelta") (pad (plist (ptuple (pnum <|> pnegnum))))
+  //pfield ("centerDelta") (pad (plist (ptuple (pnum <|> pnegnum))))
+  pright
+    (pstr "centerDelta")
+    (pad (plist (ptuple (pnum <|> pnegnum))))
+
 
 (* pdist
  *   Parses the distribution field of the polygon.
