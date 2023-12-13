@@ -1,0 +1,10 @@
+Some(((600, 600), [{ num = 4
+  numSides = 4
+  radius = 120
+  center = (300, 390)
+  step = [85; 85; 85]
+  color = ["#b4bcb1"; "#f7d85b"; "#fdd30b"; "#f0c55f"]
+  centerDelta = [(0, -30); (0, -30); (0, -30)]
+  dist = None
+  granularity = None
+  rotations = [45.0] }]))
